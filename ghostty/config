@@ -1,0 +1,14 @@
+shell-integration = zsh
+window-decoration = none
+
+background = #000000
+background-opacity = 0.50
+background-blur = 0
+
+window-decoration = none
+window-padding-x = 0
+window-padding-y = 5
+
+window-show-tab-bar = never
+gtk-tabs-location = hidden
+gtk-titlebar-hide-when-maximized = true
