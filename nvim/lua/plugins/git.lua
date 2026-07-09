@@ -118,6 +118,29 @@ return {
         desc = "Diff",
       },
 
+      -- Fecha o diff SEM deixar o buffer preso em modo diff.
+      -- `:close` sozinho mantém diff/foldmethod=diff/scrollbind ligados,
+      -- o que faz o arquivo parecer "quebrado" (tudo colapsado em fold)
+      -- e atrapalha a navegação. Aqui a gente:
+      --   1) roda diffoff! -> restaura wrap/fold/scrollbind do buffer
+      --   2) fecha as janelas scratch do gitsigns (gitsigns://...)
+      -- Dentro do diff, use `]c`/`[c` p/ navegar e `do` p/ puxar a
+      -- mudança do lado direito (index) de volta pro seu arquivo.
+      {
+        "<leader>gD",
+        function()
+          vim.cmd("diffoff!")
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            local name = vim.api.nvim_buf_get_name(buf)
+            if name:match("^gitsigns:") then
+              vim.api.nvim_win_close(win, true)
+            end
+          end
+        end,
+        desc = "Close Diff",
+      },
+
       ------------------------------------------------------------------
       -- Blame
       ------------------------------------------------------------------

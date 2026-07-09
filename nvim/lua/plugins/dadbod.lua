@@ -27,6 +27,28 @@ return {
     lazy = true,
   },
 
+  -- Registra o dadbod como source do blink.cmp nos filetypes de SQL.
+  -- Sem isto o plugin acima fica instalado mas SEM autocomplete de
+  -- tabelas/colunas do banco. Usa o módulo nativo de blink do dadbod.
+  {
+    "saghen/blink.cmp",
+    opts = {
+      sources = {
+        per_filetype = {
+          sql = { "dadbod", "snippets", "buffer" },
+          mysql = { "dadbod", "snippets", "buffer" },
+          plsql = { "dadbod", "snippets", "buffer" },
+        },
+        providers = {
+          dadbod = {
+            name = "Dadbod",
+            module = "vim_dadbod_completion.blink",
+          },
+        },
+      },
+    },
+  },
+
   -------------------------------------------------
   -- Dadbod UI
   -------------------------------------------------
@@ -65,20 +87,22 @@ return {
 
     keys = {
 
+      -- Grupo <leader>D (Database). Antes usava <leader>du/da, que colidiam
+      -- com o DAP UI / DAP attach do dap.lua.
       {
-        "<leader>du",
+        "<leader>Du",
         "<cmd>DBUIToggle<CR>",
         desc = "Database UI",
       },
 
       {
-        "<leader>da",
+        "<leader>Da",
         "<cmd>DBUIAddConnection<CR>",
         desc = "Add Database",
       },
 
       {
-        "<leader>df",
+        "<leader>Df",
         "<cmd>DBUIFindBuffer<CR>",
         desc = "Find DB Buffer",
       },

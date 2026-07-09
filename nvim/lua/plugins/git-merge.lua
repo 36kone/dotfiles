@@ -137,10 +137,12 @@ return {
         desc = "3-Way Merge",
       },
 
+      -- <leader>gw (não gb): o gb já é o blame de linha do gitsigns.
+      -- Aqui é o blame de janela cheia do fugitive (navegável).
       {
-        "<leader>gb",
-        "<cmd>Gblame<CR>",
-        desc = "Git Blame",
+        "<leader>gw",
+        "<cmd>Git blame<CR>",
+        desc = "Git Blame (window)",
       },
     },
   },

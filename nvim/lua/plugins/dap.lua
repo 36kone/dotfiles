@@ -276,4 +276,20 @@ return {
       end
     end,
   },
+
+  -- Adapters de debug via Mason (idempotente). Sem isso o nvim-dap sobe sem
+  -- os binários e o debug falha. Instalam sozinho — evita ter que rodar
+  -- :MasonInstall na mão (que só existe depois de abrir :Mason).
+  {
+    "mason-org/mason.nvim",
+    opts = function(_, opts)
+      opts.ensure_installed = opts.ensure_installed or {}
+      vim.list_extend(opts.ensure_installed, {
+        "codelldb", -- Rust (rustaceanvim)
+        "debugpy", -- Python (dap-python)
+        "js-debug-adapter", -- JS/TS (dap-vscode-js)
+        "delve", -- Go (dap-go)
+      })
+    end,
+  },
 }

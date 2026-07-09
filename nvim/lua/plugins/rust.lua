@@ -4,9 +4,10 @@ return {
     version = "^6",
     lazy = false,
     config = function()
-      local mason_registry = require("mason-registry")
-
-      local codelldb = mason_registry.get_package("codelldb"):get_install_path()
+      -- Mason 2.0 removeu Package:get_install_path(). Agora montamos o caminho
+      -- direto (mesmo padrão do dap.lua). O codelldb continua sendo instalado
+      -- pelo Mason em <data>/mason/packages/codelldb.
+      local codelldb = vim.fn.stdpath("data") .. "/mason/packages/codelldb"
 
       local extension_path = codelldb .. "/extension/"
       local codelldb_path = extension_path .. "adapter/codelldb"
