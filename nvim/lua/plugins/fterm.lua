@@ -18,7 +18,6 @@ return {
         mode = "n",
         desc = "Toggle FTerm",
       },
-
       {
         "<A-i>",
         function()
@@ -33,8 +32,8 @@ return {
       border = "rounded",
 
       dimensions = {
-        height = 0.6,
-        width = 0.8,
+        height = 0.7,
+        width = 0.7,
       },
     },
   },

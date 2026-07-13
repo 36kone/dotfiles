@@ -22,7 +22,10 @@ f() {
     return 1
   fi
 
-  file="$("$finder" --type f --hidden --follow --exclude .git | fzf)"
+  file="$("$finder" --type f --hidden --follow --exclude .git | \
+  fzf \
+    --preview 'bat --style=numbers --color=always --line-range=:500 {}' \
+    --preview-window=right:40%)"
 
   if [ -z "$file" ]; then
     return 0
@@ -40,6 +43,8 @@ f() {
   esac
 }
 
-alias ls="eza -la --icons"
+alias ls="eza -a --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions --sort=extension"
+alias tree="eza --tree"
+alias lg="lazygit"
 
 export PATH="/opt/nvim-linux-x86_64/bin:$PATH"

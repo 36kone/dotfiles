@@ -35,78 +35,6 @@ return {
     keys = {
 
       ------------------------------------------------------------------
-      -- Hunks
-      ------------------------------------------------------------------
-
-      {
-        "]h",
-        function()
-          require("gitsigns").nav_hunk("next")
-        end,
-        desc = "Next Hunk",
-      },
-
-      {
-        "[h",
-        function()
-          require("gitsigns").nav_hunk("prev")
-        end,
-        desc = "Previous Hunk",
-      },
-
-      {
-        "<leader>gp",
-        function()
-          require("gitsigns").preview_hunk()
-        end,
-        desc = "Preview Hunk",
-      },
-
-      ------------------------------------------------------------------
-      -- Stage
-      ------------------------------------------------------------------
-
-      {
-        "<leader>gs",
-        function()
-          require("gitsigns").stage_hunk()
-        end,
-        desc = "Stage Hunk",
-      },
-
-      {
-        "<leader>gu",
-        function()
-          require("gitsigns").undo_stage_hunk()
-        end,
-        desc = "Undo Stage Hunk",
-      },
-
-      {
-        "<leader>gr",
-        function()
-          require("gitsigns").reset_hunk()
-        end,
-        desc = "Reset Hunk",
-      },
-
-      {
-        "<leader>gS",
-        function()
-          require("gitsigns").stage_buffer()
-        end,
-        desc = "Stage Buffer",
-      },
-
-      {
-        "<leader>gR",
-        function()
-          require("gitsigns").reset_buffer()
-        end,
-        desc = "Reset Buffer",
-      },
-
-      ------------------------------------------------------------------
       -- Diff
       ------------------------------------------------------------------
 
@@ -118,14 +46,6 @@ return {
         desc = "Diff",
       },
 
-      -- Fecha o diff SEM deixar o buffer preso em modo diff.
-      -- `:close` sozinho mantém diff/foldmethod=diff/scrollbind ligados,
-      -- o que faz o arquivo parecer "quebrado" (tudo colapsado em fold)
-      -- e atrapalha a navegação. Aqui a gente:
-      --   1) roda diffoff! -> restaura wrap/fold/scrollbind do buffer
-      --   2) fecha as janelas scratch do gitsigns (gitsigns://...)
-      -- Dentro do diff, use `]c`/`[c` p/ navegar e `do` p/ puxar a
-      -- mudança do lado direito (index) de volta pro seu arquivo.
       {
         "<leader>gD",
         function()
@@ -160,18 +80,6 @@ return {
         end,
         desc = "Toggle Blame",
       },
-
-      ------------------------------------------------------------------
-      -- Deleted
-      ------------------------------------------------------------------
-
-      {
-        "<leader>gi",
-        function()
-          require("gitsigns").preview_hunk_inline()
-        end,
-        desc = "Inline Preview",
-      },
     },
   },
 
@@ -181,7 +89,6 @@ return {
 
   {
     "folke/snacks.nvim",
-
     opts = {
 
       gitbrowse = {
@@ -210,59 +117,84 @@ return {
         end,
         desc = "Git Log",
       },
-
-      {
-        "<leader>gf",
-        function()
-          require("snacks").picker.git_files()
-        end,
-        desc = "Git Files",
-      },
-
-      {
-        "<leader>gc",
-        function()
-          require("snacks").picker.git_status()
-        end,
-        desc = "Git Status",
-      },
     },
   },
 
-  -------------------------------------------------
-  -- Gitlinker
-  -------------------------------------------------
+  ------------------------------------------------------------------
+  -- DiffView (MAIN solution for ALL merge conflicts)
+  ------------------------------------------------------------------
 
   {
-    "ruifm/gitlinker.nvim",
 
-    dependencies = {
-      "nvim-lua/plenary.nvim",
+    "sindrets/diffview.nvim",
+
+    cmd = {
+      "DiffviewOpen",
+      "DiffviewClose",
+      "DiffviewFileHistory",
     },
-
-    opts = {},
 
     keys = {
 
+      -- Main navigation
       {
-        "<leader>gy",
-        function()
-          require("gitlinker").get_buf_range_url("n", {
-            action = "copy",
-          })
-        end,
-        desc = "Copy Git Link",
+        "<leader>gv",
+        "<cmd>DiffviewOpen<CR>",
+        desc = "Open DiffView",
       },
 
       {
-        "<leader>gy",
-        function()
-          require("gitlinker").get_buf_range_url("v", {
-            action = "copy",
-          })
-        end,
-        mode = "v",
-        desc = "Copy Selected Git Link",
+        "<leader>gV",
+        "<cmd>DiffviewClose<CR>",
+        desc = "Close DiffView",
+      },
+
+      -- Merge conflict resolution (key mappings for DiffView)
+      {
+        "<leader>co",
+        "<cmd>DiffviewConflictsChooseOurs<CR>",
+        desc = "Choose Ours",
+      },
+
+      {
+        "<leader>ct",
+        "<cmd>DiffviewConflictsChooseTheirs<CR>",
+        desc = "Choose Theirs",
+      },
+
+      {
+        "<leader>cb",
+        "<cmd>DiffviewConflictsChooseBoth<CR>",
+        desc = "Choose Both",
+      },
+
+      {
+        "<leader>cn",
+        "<cmd>DiffviewConflictsChooseNone<CR>",
+        desc = "Choose None",
+      },
+
+      {
+        "[x",
+        "<cmd>DiffviewConflictsPrevious<CR>",
+        desc = "Previous Conflict",
+      },
+
+      {
+        "]x",
+        "<cmd>DiffviewConflictsNext<CR>",
+        desc = "Next Conflict",
+      },
+    },
+
+    opts = {
+      -- Essential merge tool setup
+      view = {
+        merge_tool = {
+          layout = "diff3_horizontal", -- 3-way merge (ours, theirs, base)
+          disable_diagnostics = true, -- Turn off diagnostics while conflicted
+          winbar_info = true, -- Show winbar with conflict info
+        },
       },
     },
   },
