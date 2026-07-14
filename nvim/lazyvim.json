@@ -1,6 +1,7 @@
 {
   "extras": [
     "lazyvim.plugins.extras.coding.mini-surround",
+    "lazyvim.plugins.extras.editor.mini-files",
     "lazyvim.plugins.extras.editor.mini-move"
   ],
   "install_version": 8,
@@ -9,3 +10,4 @@
   },
   "version": 8
 }
+

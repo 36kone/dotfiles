@@ -3,15 +3,9 @@ return {
     "folke/snacks.nvim",
     opts = {
       picker = {
-        -- hidden  -> mostra dotfiles (.env, .gitignore, ...)
-        -- ignored -> mostra o que está no .gitignore (ex: .env)
-        -- Antes ignored=false escondia o .env mesmo com hidden=true.
         hidden = true,
         ignored = true,
 
-        -- Com ignored=true, todo o lixo gitignored voltaria a aparecer.
-        -- exclude sempre esconde estes, independente do .gitignore.
-        -- Cobre Go / Python / TS-React / Rust.
         exclude = {
           ".git",
           -- Python
@@ -32,6 +26,13 @@ return {
           "vendor",
           -- Diversos
           ".DS_Store",
+        },
+
+        sources = {
+          explorer = {
+            follow_file = false,
+            layout = { layout = { position = "right" } },
+          },
         },
       },
     },
